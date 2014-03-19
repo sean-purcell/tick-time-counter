@@ -1,7 +1,5 @@
 package ibur.ticktimecounter.test;
 
-import ibur.ticktimecounter.ImageAnalysis;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +9,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
-public class BoolizeTest {
+public class Rotater {
 	public static void main(String[] args) { 
 		JFileChooser jfc = new JFileChooser(new File("/Users/Sean/Documents/tick-time-counter"));
 		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -21,18 +19,17 @@ public class BoolizeTest {
 		}
 		System.out.println(jfc.getSelectedFile().getAbsolutePath());
 		List<BufferedImage> images = getImages(jfc.getSelectedFile());
-		List<BufferedImage> boolized = new ArrayList<BufferedImage>(images.size());
+		List<BufferedImage> rotated = new ArrayList<BufferedImage>(images.size());
 		for(BufferedImage b : images) {
-			boolized.add(ImageAnalysis.boolToImage(ImageAnalysis.boolizeImage(b)));
-			System.out.println("boolized image");
+			rotated.add(rotateImage180(b));
 		}
-		File outFolder = new File(jfc.getSelectedFile().getAbsoluteFile() + "booloutput");
+		File outFolder = new File(jfc.getSelectedFile().getAbsoluteFile() + "_rotated");
 		if(!outFolder.exists()) {
 			outFolder.mkdir();
 		}
-		for(int i = 0; i < boolized.size(); i++) {
+		for(int i = 0; i < rotated.size(); i++) {
 			try{
-				ImageIO.write(boolized.get(i), "png", new File(outFolder.getAbsolutePath() + "/tape_1_" + (i < 10 ? "0" : "") + i + ".png"));
+				ImageIO.write(rotated.get(i), "png", new File(outFolder.getAbsolutePath() + "/tape_1_" + i + ".png"));
 			}
 			catch(IOException e) {
 				e.printStackTrace();
@@ -63,5 +60,15 @@ public class BoolizeTest {
 			}
 		}
 		return l;
+	}
+	
+	private static BufferedImage rotateImage180(BufferedImage b) {
+		BufferedImage n = new BufferedImage(b.getWidth(), b.getHeight(), BufferedImage.TYPE_INT_RGB);
+		for(int x = 0; x < b.getWidth(); x++) {
+			for(int y = 0; y < b.getHeight(); y++) {
+				n.setRGB(b.getWidth() - x - 1, b.getHeight() - y - 1, b.getRGB(x, y));
+			}
+		}
+		return n;
 	}
 }

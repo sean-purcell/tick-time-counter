@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 
 public class ImageAnalysis {
 	
+	public static final int LIGHT_THRESHOLD = 190;
+	
 	/**
 	 * Calculates the "absolute value" of a colour squared
 	 * |rgb|^2 = r^2+g^2+b^2
@@ -63,7 +65,7 @@ public class ImageAnalysis {
 		for(int x = 0; x < b.getWidth(); x++) {
 			for(int y = 0; y < b.getHeight(); y++) {
 				//p[x][y] = colourAbs2(b.getRGB(x,y)) < avgSq;
-				p[x][y] = colourAvg(b.getRGB(x, y)) < 192;
+				p[x][y] = colourAvg(b.getRGB(x, y)) < LIGHT_THRESHOLD;
 			}
 		}
 		return p;
@@ -77,5 +79,15 @@ public class ImageAnalysis {
 			}
 		}
 		return b;
+	}
+	
+	public static boolean[][] imageToBool(BufferedImage b) {
+		boolean[][] a = new boolean[b.getWidth()][b.getHeight()];
+		for(int x = 0; x < a.length; x++) {
+			for(int y = 0; y <a[0].length; y++) {
+				a[x][y] = b.getRGB(x, y) == 0x0;
+			}
+		}
+		return a;
 	}
 }
