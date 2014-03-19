@@ -85,7 +85,7 @@ public class ImageAnalysis {
 		boolean[][] a = new boolean[b.getWidth()][b.getHeight()];
 		for(int x = 0; x < a.length; x++) {
 			for(int y = 0; y <a[0].length; y++) {
-				a[x][y] = b.getRGB(x, y) == 0x0;
+				a[x][y] = (b.getRGB(x, y) & 0xffffff) == 0x0;
 			}
 		}
 		return a;

@@ -22,6 +22,11 @@ public class Dot {
 		this.distBack = lastDot == null ? Double.NaN : Math.abs(lastDot.pos - this.pos);
 	}
 	
+	@Override
+	public String toString() {
+		return "[distBack: " + distBack + ", pos: " + pos + "];";
+	}
+	
 	public static List<Dot> analyzeTape(List<BufferedImage> images) {
 		List<List<Dot>> subdots = new ArrayList<List<Dot>>(); // a list of dots for each image
 		for(int i = 0; i < images.size(); i++) { 
@@ -71,7 +76,7 @@ public class Dot {
 		List<Dot> grand = new ArrayList<Dot>();
 		grand.addAll(l.get(1));
 		for(int i = 1; i < l.size(); i++) {
-			grand.addAll(l.get(i).subList(1, l.size()));
+			grand.addAll(l.get(i).subList(1, l.get(i).size()));
 		}
 		grand.set(0, new Dot(0, 0));
 		for(int i = 1; i < grand.size(); i++) {
