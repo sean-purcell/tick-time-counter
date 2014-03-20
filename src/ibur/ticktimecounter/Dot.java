@@ -106,7 +106,7 @@ public class Dot {
 	
 	private static List<Dot> stitchDotLists(List<List<Dot>> l) {
 		List<Dot> grand = new ArrayList<Dot>();
-		grand.addAll(l.get(1));
+		grand.addAll(l.get(0));
 		for(int i = 1; i < l.size(); i++) {
 			grand.addAll(l.get(i).subList(1, l.get(i).size()));
 		}
