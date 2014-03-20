@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -45,7 +46,9 @@ public class BoolizeTest {
 			throw new IllegalArgumentException("Argument must be directory");
 		}
 		List<BufferedImage> l = new ArrayList<BufferedImage>();
-		for(File f : d.listFiles()) {
+		File[] files = d.listFiles();
+		Arrays.sort(files);
+		for(File f : files) {
 			if(f.isFile() && f.canRead()) {
 				try{
 					BufferedImage b = ImageIO.read(f);

@@ -1,6 +1,8 @@
 package ibur.ticktimecounter;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImageAnalysis {
 	
@@ -89,5 +91,17 @@ public class ImageAnalysis {
 			}
 		}
 		return a;
+	}
+	
+	public static List<Dot> amalgamateShorts(List<Dot> l) {
+		List<Dot> n = new ArrayList<Dot>();
+		n.add(l.get(0));
+		for(int i = 1; i < l.size(); i++) {
+			Dot d = l.get(i);
+			if(d.distBack > 10) {
+				n.add(new Dot(d.pos-n.get(n.size()-1).pos, d.pos));
+			}
+		}
+		return n;
 	}
 }

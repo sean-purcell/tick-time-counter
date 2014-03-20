@@ -1,6 +1,7 @@
 package ibur.ticktimecounter.test;
 
-import ibur.ticktimecounter.ImageCropper;
+import ibur.ticktimecounter.Dot;
+import ibur.ticktimecounter.ImageAnalysis;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,7 +13,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
-public class CropperTest {
+public class AnalysisTest {
 	public static void main(String[] args) { 
 		JFileChooser jfc = new JFileChooser(new File("/Users/Sean/Documents/tick-time-counter"));
 		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -22,18 +23,10 @@ public class CropperTest {
 		}
 		System.out.println(jfc.getSelectedFile().getAbsolutePath());
 		List<BufferedImage> images = getImages(jfc.getSelectedFile());
-		List<BufferedImage> cropped = (new ImageCropper(images)).showCropDialog();
-		File outFolder = new File(jfc.getSelectedFile().getAbsoluteFile() + "cropped");
-		if(!outFolder.exists()) {
-			outFolder.mkdir();
-		}
-		for(int i = 0; i < cropped.size(); i++) {
-			try{
-				ImageIO.write(cropped.get(i), "png", new File(outFolder.getAbsolutePath() + "/tape_1_0" + i + ".png"));
-			}
-			catch(IOException e) {
-				e.printStackTrace();
-			}
+		List<Dot> data = Dot.analyzeTape(images);
+		data = ImageAnalysis.amalgamateShorts(data);
+		for(Dot d : data) {
+			System.out.println(d);
 		}
 	}
 	

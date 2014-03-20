@@ -17,6 +17,8 @@ public class ImageCropper extends JPanel implements MouseListener, MouseMotionLi
 	
 	private volatile int click;
 	private int x0, y0, x1, y1;
+	
+	private int index;
 	public ImageCropper(List<BufferedImage> images) {
 		super();
 		this.images = images;
@@ -31,12 +33,15 @@ public class ImageCropper extends JPanel implements MouseListener, MouseMotionLi
 		j.add(this);
 		j.pack();
 		j.setVisible(true);
-		System.out.println("wait for click start");
-		while(click != 2);
-		System.out.println("waiting for clicks done");
 		List<BufferedImage> cropped = new ArrayList<BufferedImage>();
-		for(BufferedImage b : images) {
-			cropped.add(b.getSubimage(x0, y0, x1-x0, y1-y0));
+		for(index = 0; index < images.size(); index++) {
+			j.repaint();
+			this.repaint();
+			click = 0;
+			System.out.println("wait for click start");
+			while(click != 2);
+			System.out.println("waiting for clicks done");
+			cropped.add(images.get(index).getSubimage(x0, y0, x1-x0, y1-y0));
 		}
 		j.dispose();
 		return cropped;
@@ -45,20 +50,24 @@ public class ImageCropper extends JPanel implements MouseListener, MouseMotionLi
 	@Override
 	public void paintComponent(Graphics g) {
 		if(images != null) {
-			g.drawImage(images.get(0).getScaledInstance(images.get(0).getWidth()/2, -1, 0), 0, 0, null);
+			g.drawImage(images.get(index).getScaledInstance(images.get(index).getWidth()/2, -1, 0), 0, 0, null);
 		}
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(click == 0) {
-			x0 = e.getX() * 2;
-			y0 = e.getY() * 2;
-			click++;
-		} else if(click == 1) {
-			x1 = e.getX() * 2;
-			y1 = e.getY() * 2;
-			click++;
+		if(e.getButton() == MouseEvent.BUTTON1) {
+			if(click == 0) {
+				x0 = e.getX() * 2;
+				y0 = e.getY() * 2;
+				click++;
+			} else if(click == 1) {
+				x1 = e.getX() * 2;
+				y1 = e.getY() * 2;
+				click++;
+			}
+		} else {
+			click--;
 		}
 		System.out.println("(" + e.getX() + "," + e.getY() + ")");
 		System.out.println(click);
