@@ -24,7 +24,7 @@ public class BoolizeTest {
 		List<BufferedImage> images = getImages(jfc.getSelectedFile());
 		List<BufferedImage> boolized = new ArrayList<BufferedImage>(images.size());
 		for(BufferedImage b : images) {
-			boolized.add(ImageAnalysis.boolToImage(ImageAnalysis.boolizeImage(b)));
+			boolized.add(ImageAnalysis.boolToImage(ImageAnalysis.boolizeImage(b, 190)));
 			System.out.println("boolized image");
 		}
 		File outFolder = new File(jfc.getSelectedFile().getAbsoluteFile() + "booloutput");

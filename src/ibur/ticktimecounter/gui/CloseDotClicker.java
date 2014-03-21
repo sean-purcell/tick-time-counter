@@ -1,4 +1,7 @@
-package ibur.ticktimecounter;
+package ibur.ticktimecounter.gui;
+
+import ibur.ticktimecounter.Dot;
+import ibur.ticktimecounter.Point;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

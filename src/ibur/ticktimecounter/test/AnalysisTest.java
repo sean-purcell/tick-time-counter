@@ -1,9 +1,9 @@
 package ibur.ticktimecounter.test;
 
-import ibur.ticktimecounter.CloseDotClicker;
 import ibur.ticktimecounter.Dot;
 import ibur.ticktimecounter.ImageAnalysis;
 import ibur.ticktimecounter.Util;
+import ibur.ticktimecounter.gui.CloseDotClicker;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,6 +27,7 @@ public class AnalysisTest {
 		List<BufferedImage> images = getImages(jfc.getSelectedFile());
 		List<Dot> data = Dot.analyzeTape(images);
 		data = ImageAnalysis.amalgamateShorts(data);
+		data = ImageAnalysis.fixBigs(data);
 		data = CloseDotClicker.insertClicks(data, new CloseDotClicker(images.get(0)).showClickWindow());
 		for(Dot d : data) {
 			System.out.println(d);

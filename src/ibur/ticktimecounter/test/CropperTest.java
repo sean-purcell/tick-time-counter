@@ -1,6 +1,6 @@
 package ibur.ticktimecounter.test;
 
-import ibur.ticktimecounter.ImageCropper;
+import ibur.ticktimecounter.gui.ImageCropper;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,7 +22,7 @@ public class CropperTest {
 		}
 		System.out.println(jfc.getSelectedFile().getAbsolutePath());
 		List<BufferedImage> images = getImages(jfc.getSelectedFile());
-		List<BufferedImage> cropped = (new ImageCropper(images)).showCropDialog();
+		List<BufferedImage> cropped = (new ImageCropper(images)).showCropDialog(null);
 		File outFolder = new File(jfc.getSelectedFile().getAbsoluteFile() + "cropped");
 		if(!outFolder.exists()) {
 			outFolder.mkdir();

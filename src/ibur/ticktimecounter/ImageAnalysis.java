@@ -6,8 +6,6 @@ import java.util.List;
 
 public class ImageAnalysis {
 	
-	public static final int LIGHT_THRESHOLD = 190;
-	
 	/**
 	 * Calculates the "absolute value" of a colour squared
 	 * |rgb|^2 = r^2+g^2+b^2
@@ -57,12 +55,12 @@ public class ImageAnalysis {
 	/**
 	 * From an image split each pixel into true or false, true if it is darker than the average, false if it is not
 	 * @param b The image to split
+	 * @param LIGHT_THRESHOLD TODO
 	 * @return A 2-dimensional boolean array with each entry representing the side that pixel falls on
 	 */
-	public static boolean[][] boolizeImage(BufferedImage b) {
-		double  avg   = imageAvg(b),
-				avgSq = avg*avg;
-		
+	public static boolean[][] boolizeImage(BufferedImage b, final int LIGHT_THRESHOLD) {
+		//double  avg   = imageAvg(b),
+		//		avgSq = avg*avg;
 		boolean[][] p = new boolean[b.getWidth()][b.getHeight()];
 		for(int x = 0; x < b.getWidth(); x++) {
 			for(int y = 0; y < b.getHeight(); y++) {
@@ -103,5 +101,23 @@ public class ImageAnalysis {
 			}
 		}
 		return n;
+	}
+	
+	public static List<Dot> fixBigs(List<Dot> l) {
+		final double RATIO_THRESHOLD = 1.7;
+		List<Dot> ndata = new ArrayList<Dot>();
+		ndata.add(l.get(0));
+		for(int i = 1; i < l.size() - 1; i++) {
+			Dot p = l.get(i-1),
+				c = l.get(i),
+				n = l.get(i+1);
+			if(c.distBack / p.distBack > RATIO_THRESHOLD && c.distBack / n.distBack > RATIO_THRESHOLD) {
+				ndata.add(new Dot(c.distBack / 2, c.pos - c.distBack / 2));
+				ndata.add(new Dot(c.distBack / 2, c.pos));
+			} else {
+				ndata.add(c);
+			}
+		}
+		return ndata;
 	}
 }
