@@ -130,6 +130,7 @@ public class GUI extends JFrame {
 				})).start();
 			}
 		});
+		p.add(output);
 		show = new JLabel(new ImageIcon());
 		p.add(show);
 		return p;
