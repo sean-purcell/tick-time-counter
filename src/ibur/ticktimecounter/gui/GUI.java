@@ -145,7 +145,7 @@ public class GUI extends JFrame {
 	
 	public static void main(String[] args) throws IOException {
 		if(args.length == 0) {
-			Runtime.getRuntime().exec(new String[] {"java", "-Xmx4g", "-jar", "ticktimecounter.jar", "arg"});  
+			Runtime.getRuntime().exec(new String[] {"java", "-Xmx1536m", "-jar", "ticktimecounter.jar", "arg"});  
 		} else {
 			new GUI();
 		}
