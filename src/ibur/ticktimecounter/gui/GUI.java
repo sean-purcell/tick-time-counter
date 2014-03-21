@@ -143,8 +143,12 @@ public class GUI extends JFrame {
 		this.repaint();
 	}
 	
-	public static void main(String[] args) {
-		new GUI();
+	public static void main(String[] args) throws IOException {
+		if(args.length == 0) {
+			Runtime.getRuntime().exec(new String[] {"java", "-Xmx4g", "-jar", "ticktimecounter.jar", "arg"});  
+		} else {
+			new GUI();
+		}
 	}
 	
 	private static List<BufferedImage> getImages(File d) {
