@@ -14,7 +14,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class CloseDotClicker extends JPanel implements MouseListener, MouseMotionListener {
@@ -34,6 +36,11 @@ public class CloseDotClicker extends JPanel implements MouseListener, MouseMotio
 	
 	public List<Point> showClickWindow() {
 		JFrame j = new JFrame("Close when done clicking on points");
+		JPanel root = new JPanel();
+		root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
+		this.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
+		root.add(this);
+		root.add(new JLabel("Click on the ones too close to separate in order and then the first separate one"));
 		System.out.println("Click on the ones too close to separate in order and then the first separate one");
 		j.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		j.addWindowListener(new WindowAdapter() {
@@ -42,8 +49,7 @@ public class CloseDotClicker extends JPanel implements MouseListener, MouseMotio
 				done = true;
 			}
 		});
-		this.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
-		j.add(this);
+		j.add(root);
 		j.pack();
 		j.setVisible(true);
 		while(!done){}
