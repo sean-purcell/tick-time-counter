@@ -92,15 +92,18 @@ public class ImageAnalysis {
 	}
 	
 	public static List<Dot> amalgamateShorts(List<Dot> l) {
-		List<Dot> n = new ArrayList<Dot>();
-		n.add(l.get(0));
+		final double RATIO_THRESHOLD = 0.2;
+		List<Dot> nlist = new ArrayList<Dot>();
+		nlist.add(l.get(0));
 		for(int i = 1; i < l.size(); i++) {
-			Dot d = l.get(i);
-			if(d.distBack > 10) {
-				n.add(new Dot(d.pos-n.get(n.size()-1).pos, d.pos));
+			Dot p = nlist.get(nlist.size()-1),
+					c = l.get(i);
+			System.out.println(p.distBack / c.distBack);
+			if(!(c.distBack < 10 || p.distBack / c.distBack < RATIO_THRESHOLD) || p.distBack == 0) {
+				nlist.add(new Dot(c.pos-nlist.get(nlist.size()-1).pos, c.pos));
 			}
 		}
-		return n;
+		return nlist;
 	}
 	
 	public static List<Dot> fixBigs(List<Dot> l) {
@@ -108,10 +111,10 @@ public class ImageAnalysis {
 		List<Dot> ndata = new ArrayList<Dot>();
 		ndata.add(l.get(0));
 		for(int i = 1; i < l.size() - 1; i++) {
-			Dot p = l.get(i-1),
+			Dot p = ndata.get(ndata.size()-1),
 				c = l.get(i),
 				n = l.get(i+1);
-			if(c.distBack / p.distBack > RATIO_THRESHOLD && c.distBack / n.distBack > RATIO_THRESHOLD) {
+			if(c.distBack / p.distBack > RATIO_THRESHOLD || c.distBack / n.distBack > RATIO_THRESHOLD) {
 				ndata.add(new Dot(c.distBack / 2, c.pos - c.distBack / 2));
 				ndata.add(new Dot(c.distBack / 2, c.pos));
 			} else {

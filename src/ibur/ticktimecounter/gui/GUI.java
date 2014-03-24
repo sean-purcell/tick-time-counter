@@ -49,7 +49,7 @@ public class GUI extends JFrame {
 		b.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser jfc = new JFileChooser(new File("/Users/Sean/Documents/tick-time-counter"));
+				JFileChooser jfc = new JFileChooser(new File("."));
 				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int val = jfc.showOpenDialog(null);
 				if(val == JFileChooser.APPROVE_OPTION) {
@@ -118,7 +118,7 @@ public class GUI extends JFrame {
 						for(Dot d : data) {
 							System.out.println(d);
 						}
-						JFileChooser jfc = new JFileChooser();
+						JFileChooser jfc = new JFileChooser(".");
 						jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 						jfc.showSaveDialog(null);
 						try{

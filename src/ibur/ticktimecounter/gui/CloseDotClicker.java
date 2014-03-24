@@ -92,7 +92,6 @@ public class CloseDotClicker extends JPanel implements MouseListener, MouseMotio
 	public void mouseMoved(MouseEvent e) {}
 	
 	public static List<Dot> insertClicks(List<Dot> data, List<Point> clicks) {
-		Dot first = new Dot(0, clicks.get(0).x);
 		List<Dot> ndata = new ArrayList<Dot>(data.size());
 		ndata.add(new Dot(0, 0));
 		for(int i = 1; i < clicks.size()-1; i++) {

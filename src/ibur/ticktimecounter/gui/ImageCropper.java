@@ -110,10 +110,15 @@ public class ImageCropper extends JPanel implements MouseListener, MouseMotionLi
 				y1 = e.getY() * 2;
 				click++;
 			}
-		} else {
+		} else if(click == 1) {
 			click--;
 		}
-		System.out.println("(" + e.getX() + "," + e.getY() + ")");
+		try {
+			System.out.println("(" + e.getX() + "," + e.getY() + ")");
+		}
+		catch(IndexOutOfBoundsException exc) {
+			
+		}
 		System.out.println(click);
 	}
 
