@@ -100,6 +100,9 @@ public class ImageAnalysis {
 					c = l.get(i);
 			System.out.println(p.distBack / c.distBack);
 			if(!(c.distBack < 10 || p.distBack / c.distBack < RATIO_THRESHOLD) || p.distBack == 0) {
+				//nlist.add(new Dot(c.pos-nlist.get(nlist.size()-1).pos, c.pos));
+			}
+			if(c.distBack > 10) {
 				nlist.add(new Dot(c.pos-nlist.get(nlist.size()-1).pos, c.pos));
 			}
 		}
@@ -114,7 +117,7 @@ public class ImageAnalysis {
 			Dot p = ndata.get(ndata.size()-1),
 				c = l.get(i),
 				n = l.get(i+1);
-			if(c.distBack / p.distBack > RATIO_THRESHOLD || c.distBack / n.distBack > RATIO_THRESHOLD) {
+			if(c.distBack / p.distBack > RATIO_THRESHOLD && c.distBack / n.distBack > RATIO_THRESHOLD) {
 				ndata.add(new Dot(c.distBack / 2, c.pos - c.distBack / 2));
 				ndata.add(new Dot(c.distBack / 2, c.pos));
 			} else {
